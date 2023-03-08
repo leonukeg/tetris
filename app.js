@@ -45,7 +45,64 @@ const lTetromino = [
   const theTetrominoes = [lTetromino,zTetromino,tTetromino,oTetromino,iTetromino]
 
   let currentPosition = 4
-  let current = theTetrominoes[0][0]
+  let currentRotation = 0
+  
 
-  console.log(theTetrominoes)
+  let ramdom = Math.floor(Math.random()*theTetrominoes.length)
+  let current = theTetrominoes[ramdom][currentRotation]
+
+  function draw(){
+    current.forEach(index => {
+      squares[currentPosition + index].classList.add('tetromino')
+
+    })
+  }
+  
+  function undraw(){
+    current.forEach(index => {
+      squares[currentPosition + index].classList.remove('tetromino')
+    })
+  }
+
+  timerId = setInterval(moveDown, 1000)
+
+  function moveDown(){
+    undraw()
+    currentPosition += width
+    draw()
+    freeze()
+  }
+
+function freeze(){
+  if (current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
+    current.forEach(index => squares[currentPosition + index].classList.add('taken') )
+    ramdom = Math.floor(Math.random()*theTetrominoes.length)
+    current = theTetrominoes[ramdom][currentRotation]
+    currentPosition = 4
+    draw()
+    
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 })
